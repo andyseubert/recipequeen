@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Recipe Queen</title>
+
+<link rel="shortcut icon" href="http://faviconist.com/icons/5558accaaefe07a6e5cd9565980e9204/favicon.ico" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="jeditable.js" ></script>
+
+<script type="text/javascript">
+
+function addRecipe() {
+    
+    var name = document.getElementsByName("name")[0].value;
+    var description = document.getElementsByName("description")[0].value;
+
+    
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+	
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("response").innerHTML = xmlhttp.responseText;
+           
+            //
+            $container.load("listrecipeitems.php");
+            document.getElementById("recipe").reset();
+        }
+    }
+        xmlhttp.open("POST", "addrecipe.php", true);
+        xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlhttp.send("name=" + name + "&description="+description);
+        
+}
+
+
+
+
+</script>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+</head>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    
+    <title>RECIPEs</title>
+<link rel="shortcut icon" href="http://faviconist.com/icons/5558accaaefe07a6e5cd9565980e9204/favicon.ico" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    
+</head>
+
+<body>
+    
+<script src=/js/angular.min.js></script> <!-- Latest compiled and minified CSS -->
+<script src=/js/angular-route.min.js></script>
+<link href="/angular-xeditable-0.1.8/css/xeditable.css" rel="stylesheet">
+<script src="/angular-xeditable-0.1.8/js/xeditable.js"></script>
+<script type="text/javascript" src=app.js></script>
+
+<div class="container">
+    
+    <!-- tabs for items and recipes and batches -->
+<ul class="nav nav-tabs">
+        <li ng-class="{active: $route.current.activetab == '#/items'}"><a href="#/items">items</a></li>
+        <li ng-class="{active: $route.current.activetab == '#/recipes'}"><a href="#/recipes">recipes</a></li>
+        <li ng-class="{active: $route.current.activetab == '#/batches'}"><a href="#/batches">batches</a></li>
+</ul>
+<!-- content popluates in here -->
+
+    <div ng-view></div>
+        
+</div>
+</body>
+</html>

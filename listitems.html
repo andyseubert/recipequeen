@@ -1,0 +1,36 @@
+
+<div class="row">
+<button class="btn btn-link" ng-click="addItem()">+</button>
+</div>
+<table  class="table table-condensed">
+    <tbody>
+	<tr>
+        <th  class="col-md-1" style="width:20px;" ></th>
+	    <th class="col-md-1">qty</th>
+	    <th class="col-md-1">Item Name</th>
+	    <th class="col-md-1">Vendor</th>
+	    <th class="col-md-1">Vendor Part</th>
+	    <th class="col-md-1">type</th>
+	    <th class="col-md-1" data-align="right">costPer</th>
+	    <th class="col-md-1" data-align="left">unit</th>
+	    <th class="col-md-1">origin</th>
+	    <th class="col-md-1">description</th>
+	</tr>
+	
+	<tr ng-repeat="item in items">
+	    <td ><img src="deleteme.png" width=20 height=20 id="deleteme"/></td>
+	    <td editable-text="item.quantity" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</td>
+	    <td editable-text="item.name"  onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</td>
+	    <td editable-text="item.vendor" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor }}</td>
+	    <td editable-text="item.vendorpartno" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno }}</td>
+	    <td editable-text="item.type" onaftersave="updateItem( {'item_id':item.item_id,'column':'type','value':item.type} )">{{ item.type }}</td>
+	    <td editable-text="item.cost" onaftersave="updateItem( {'item_id':item.item_id,'column':'cost','value':item.cost} )">{{ item.cost | currency }}</td>
+	    <td editable-text="item.unit" onaftersave="updateItem( {'item_id':item.item_id,'column':'unit','value':item.unit} )">{{ item.unit }}</td>
+	    <td editable-text="item.origin" onaftersave="updateItem( {'item_id':item.item_id,'column':'origin','value':item.origin} )">{{ item.origin }}</td>
+	    <td editable-text="item.description" onaftersave="updateItem( {'item_id':item.item_id,'column':'description','value':item.description} )">{{ item.description }}</td>
+	</tr>
+    </tbody>
+</table>
+<div class="row">
+	<div class="col-md-2">Total Inventory {{ calculateTotalCost() || 0  | currency }} </div>
+</div>
