@@ -18,7 +18,7 @@
     add <select ng-model="additem_id" ng-options="item.name for item in items" ng-change="addItemToRecipe(additem_id)"></select>
 </div>
 <hr/>
-{{recipeItems.length}}
+{{recipeItems.length}} items in recipe
 <table class="table table-bordered" ng-if="recipeItems.length >= 1" >
     <thead>
       <tr>

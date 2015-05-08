@@ -10,3 +10,6 @@
 [07-May-2015 08:11:42 America/Denver] PHP Parse error:  syntax error, unexpected end of file in /home6/florapor/public_html/recipequeen/data/additemtorecipe.php on line 42
 [07-May-2015 08:12:22 America/Denver] PHP Parse error:  syntax error, unexpected end of file in /home6/florapor/public_html/recipequeen/data/additemtorecipe.php on line 42
 [07-May-2015 08:12:27 America/Denver] PHP Parse error:  syntax error, unexpected end of file in /home6/florapor/public_html/recipequeen/data/additemtorecipe.php on line 42
+[07-May-2015 18:11:44 America/Denver] PHP Parse error:  syntax error, unexpected '{', expecting ')' in /home6/florapor/public_html/recipequeen/data/additem.php on line 14
+[07-May-2015 18:12:16 America/Denver] PHP Parse error:  syntax error, unexpected '"' in /home6/florapor/public_html/recipequeen/data/additem.php on line 14
+[07-May-2015 18:12:28 America/Denver] PHP Parse error:  syntax error, unexpected '"' in /home6/florapor/public_html/recipequeen/data/additem.php on line 14

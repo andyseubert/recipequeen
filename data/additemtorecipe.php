@@ -16,9 +16,15 @@ $request = json_decode($postdata);
 // check if item already exists for recipe
 $checksql = "SELECT * from recipe_item_x WHERE item_id='".$item_id."' and recipe_id='".$recipe_id."'  LIMIT 1";
 $exists = $conn->query($checksql);
-if ( $exists->num_rows == 1) {
+if ( $exists->num_rows > 0 ) {
     // already exists
-    //print_r($exists);
+    print_r($exists);
+	$rows = array(); 	
+	while($row = $exists->fetch_assoc()){
+		$rows[] = $row;
+	}
+	print json_encode($rows);
+	// seems to persist after deletion...
 }else{
 
     $sql="INSERT INTO recipe_item_x (item_id,recipe_id) VALUES ('".$item_id."','".$recipe_id."')";

@@ -15,21 +15,10 @@ $insertsql="INSERT INTO recipes (name) VALUES ( \"".$recipe_name."\")";
 $conn->query($insertsql);
 
 if ($conn->error) { printf ("error %s",$conn->error); }
-
-//echo 'added '.$recipe_name;
+//return recipt_id
+echo $conn->insert_id;
 
 // return recipe_id
-$idsql="SELECT * FROM recipes WHERE name='".$recipe_name."'";
-$recipe = $conn->query($idsql);
-
-$rows = array();
-
-while($row = $recipe->fetch_assoc()){
-    $rows[] = $row;
-}
-
-print json_encode($rows);
-
 
 
 

@@ -47,7 +47,7 @@ myApp.factory('itemService', ['$log','$http', function($log,$http){
 
 
 
-myApp.controller('inventoryItemController',['$scope','$log','$http','itemService', function($scope,$log,$http,itemService){
+myApp.controller('inventoryItemController',['$scope','$log','$http','itemService','$filter', function($scope,$log,$http,itemService,$filter){
     
     $log.info("in inventoryItemController here");
     // manage inventory items 
@@ -57,7 +57,7 @@ myApp.controller('inventoryItemController',['$scope','$log','$http','itemService
     $http.get('/data/items.php')
             .success(function(result){
                 $scope.items = result; // items set to GET result here
-                //$log.log(result);
+                $log.log(result);
             })
             .error(function(result, status){
                 $scope.items = status;
@@ -79,19 +79,27 @@ myApp.controller('inventoryItemController',['$scope','$log','$http','itemService
     
     // add item to inventory
     $scope.addItem = function() {
-        $scope.insertedItem = {
-            item_id:1000000,
-          name: '',
-          vendor: '',
-          vendorpartnumber: '',
-          type: '',
-          origin: '',
-          cost: '',
-          unit: '',
-          description: ''
-        };
+	
+		$http.get('/data/additem.php')
+			.success(function(result){
+				$log.log("result.item_id is " +result);
+				var insertedItem={
+					item_id:result,
+					name: 'new item',
+					vendor: '',
+					vendorpartnumber: '',
+					type: '',
+					origin: '',
+					cost: '',
+					unit: '',
+					description: ''
+				};
+				$scope.items.splice(0,0,insertedItem);
+			})
+			.error(function(result,status){
+				$log.log(status+"	"+result);
+			})
         
-        $scope.items.splice(0,0,$scope.insertedItem);
   };
     
     
@@ -115,7 +123,20 @@ myApp.controller('inventoryItemController',['$scope','$log','$http','itemService
     calculateTotalCost();
     };
     
-    
+    // delete Item from inventory
+	$scope.deleteItem=function(removethis){
+        // {'item_id':item.item_id})
+		$http.post('data/deleteitem.php',removethis)
+		.success(function(result){
+			$log.log ("deleted item id : " + removethis.item_id);
+			// remove from $scope.items too			
+			   $log.log("returned from php: " + result);
+			   $scope.items = $filter('filter')($scope.items, function(value, index) {return value.item_id !== removethis.item_id;});
+			 
+		})
+	
+	
+	};
     
 }]);
 
@@ -191,7 +212,14 @@ myApp.controller('recipeController',['$scope','$log','$http','itemService','$fil
         $http.post('/data/addrecipe.php',{ 'recipe_name':$scope.recipe_name })
         .success(function(result){
             //$log.log(result);
-            $scope.recipe = result;
+            $scope.recipe = {
+			'recipe_id':result,
+			'name':$scope.recipe_name,
+			'description':'',
+			'recipe_cost':'',
+			'recipe_size':'',
+			'recipe_units':''
+			};
             $scope.recipe_id=$scope.recipe.recipe_id
             $scope.recipes.push($scope.recipe);
             //$log.info($scope.recipe);
@@ -219,7 +247,7 @@ myApp.controller('recipeController',['$scope','$log','$http','itemService','$fil
                 if ( angular.isObject(result) ) { // empty means there was a duplicate
                     // find the item object from the items we have and push it onto the recipeItems
                     $log.log("add item to recipe result from php: " + result);
-                    var matchedItem = $filter('filter')($scope.items, function(value, index) {return value.item_id == additem_id.item_id;});
+                    var matchedItem = $filter('filter')($scope.items, function(value, index) {return value.item_id == additem_id.item_id;})[0];
                     if (matchedItem) {
                         
                         $scope.recipeItems.push(matchedItem);
@@ -250,16 +278,18 @@ myApp.controller('recipeController',['$scope','$log','$http','itemService','$fil
         $log.log("incoming values:"+removethis.toString());
         
         $log.log("removethis recipe_id : " + removethis.recipe_id);
+		$log.log("current page $scope.recipe_id.recipe_id: " + $scope.recipe_id.recipe_id);
         $log.log("removethis item_id : " + removethis.item_id);
         
-        $http.post('/data/removerecipeitem.php',{'recipe_id':removethis.recipe_id,'item_id':removethis.item_id})
-        .success(function(result){
-           // still not sure how to remove from recipeItems
-           $scope.recipeItems = $filter('filter')($scope.recipeItems, function(value, index) {return value.item_id !== removethis.item_id;});
-         })
-        .error(function(result,status){
-           $log.log("error result:" + result);  
-        })
+        $http.post('/data/removerecipeitem.php',{'recipe_id':$scope.recipe_id.recipe_id,'item_id':removethis.item_id})
+			.success(function(result){
+			   // remove from recipeItems
+			   $log.log("returned from php: " + result);
+			   $scope.recipeItems = $filter('filter')($scope.recipeItems, function(value, index) {return value.item_id !== removethis.item_id;});
+			 })
+			.error(function(result,status){
+			   $log.log("error result:" + result);  
+			})
      
     };
     
