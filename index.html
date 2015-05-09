@@ -10,14 +10,29 @@
 <link rel="shortcut icon" href="http://faviconist.com/icons/5558accaaefe07a6e5cd9565980e9204/favicon.ico" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="all">
     
+<style>
+    @media print {
+  * { margin: 0 !important; padding: 0 !important; }
+  #controls, .footer, .footerarea{ display: none; }
+  html, body {
+    /*changing width to 100% causes huge overflow and wrap*/
+    height:100%; 
+    overflow: hidden;
+    background: #FFF; 
+    font-size: 9.5pt;
+  }
+</style>    
+  
 </head>
 
 <body>
     
 <script src=/js/angular.min.js></script> <!-- Latest compiled and minified CSS -->
-<script src=/js/angular-route.min.js></script>
-<link href="/angular-xeditable-0.1.8/css/xeditable.css" rel="stylesheet">
-<script src="/angular-xeditable-0.1.8/js/xeditable.js"></script>
+<script src=/js/angular-route.min.js></script> <!-- route for angular -->
+<link href="/angular-xeditable-0.1.8/css/xeditable.css" rel="stylesheet"> <!-- xeditable -->
+<script src="/angular-xeditable-0.1.8/js/xeditable.js"></script><!-- xeditable -->
+<script src="/js/ui-bootstrap-tpls-0.13.0.min.js"></script> <!-- for in-place typeahead -->
+
 <script type="text/javascript" src=/js/app.js></script>
 <script type="text/javascript" src=/js/inventoryCtrl.js></script>
 <script type="text/javascript" src=/js/recipeCtrl.js></script>
@@ -38,7 +53,7 @@
 </nav>
 <!-- content popluates in here -->
 
-<div class="container">
+<div class="container-fluid">
     
     <div ng-view></div>
         

@@ -1,13 +1,14 @@
 
-<div class="row"  class="hidden-print" >
+<div class="row">
     <!--- add a button to change recipes -->
     
     <!-- button to add recipe -->
+    <div class="hidden-print" >
     <a href="" ng-click="addone=true">add recipe</a>
-    <input  ng-show="addone" type="text" name="recipe_name" placeholder="recipe name" ng-model="recipe_name" ><button  ng-show="addone" ng-click="addRecipe()" class="btn btn-primary">+</button>
+    <input ng-show="addone" type="text" name="recipe_name" placeholder="recipe name" ng-model="recipe_name" ><button  ng-show="addone" ng-click="addRecipe()" class="btn btn-primary">+</button>
         - or choose from:    
         <select ng-model="recipe" ng-options="recipe.name for recipe in recipes"  ng-change="selectRecipe(recipe)"></select>
-        
+    </div>   
             
         
         <center><h2>{{recipe.name}}</h2></center>
@@ -26,36 +27,36 @@
         <th width="20" class="hidden-print" ><center>-</center></th>
 	<th style="display: none;"  class="hidden-print" >index</th>
         <th>
-          <a href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
+          <a class="hidden-print" href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
           Item Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          </a><span class="visible-print-inline">Item Name</span>
         </th>
         <th>
-          <a href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">
+          <a class="hidden-print" href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">
             amount <span ng-show="orderByField == 'amount'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          </a><span class="visible-print-inline">amount</span>
         </th>
         <th>
-          <a href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
+          <a class="hidden-print" href="" ng-click="orderByField='type'; reverseSort = !reverseSort">
           type <span ng-show="orderByField == 'type'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          </a><span class="visible-print-inline">type</span>
         </th>
         <th>
-          <a href="" ng-click="orderByField='cost'; reverseSort = !reverseSort">
+          <a class="hidden-print" href="" ng-click="orderByField='cost'; reverseSort = !reverseSort">
           cost per<span ng-show="orderByField == 'cost'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          </a><span class="visible-print-inline">cost per</span>
         </th>
         <th>
-          <a href="" ng-click="orderByField='origin'; reverseSort = !reverseSort">
-          origin <span ng-show="orderByField == 'origin'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          <a class="hidden-print" href="" ng-click="orderByField='vendor'; reverseSort = !reverseSort">
+          vendor+part<span ng-show="orderByField == 'vendor'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a><span class="visible-print-inline">vendor+part</span>
         </th>
         <th>
-          <a href="" ng-click="orderByField='total'; reverseSort = !reverseSort">
+          <a class="hidden-print" href="" ng-click="orderByField='total'; reverseSort = !reverseSort">
           total <span ng-show="orderByField == 'total'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
+          </a><span class="visible-print-inline">total</span>
         </th>
-        <th>
+        <th class="hidden-print" >
           <a href="" ng-click="orderByField='stockqty'; reverseSort = !reverseSort">
           stockQty <span ng-show="orderByField == 'stockqty'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
           </a>
@@ -67,12 +68,12 @@
 	<td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
         <td  class="hidden-print" style="display: none;">{{$index}}</td>
 	<td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} ">{{recipeitem.name}}</td>
-        <td editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{recipeitem.amount}} {{recipeitem.unit}}</td>
+        <td  buttons="no" editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{recipeitem.amount}} {{recipeitem.unit}}</td>
         <td>{{recipeitem.type}}</td>
         <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
-        <td>{{recipeitem.origin}}</td>
-        <td>{{parseInt(recipeitem.cost) * parseInt(recipeitem.amount) | currency }}</td>
-	<td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} ">{{recipeitem.stockqty}}</td>
+        <td>{{recipeitem.vendor}}+{{recipeitem.vendorpartno}}</td>
+        <td>{{recipeitem.cost * recipeitem.amount | currency }}</td>
+	<td class="hidden-print" ><span ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} ">{{recipeitem.stockqty}}</span></td>
       </tr>
     </tbody>
   </table>

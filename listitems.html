@@ -58,7 +58,7 @@
 	<tr ng-repeat="item in items|orderBy:orderByField:reverseSort">
 	    <td><a href=''  ng-click="deleteItem( {'item_id':item.item_id } )"><img src="deleteme.png" width=20 height=20 id="deleteme"/></a></td>
 		<td style="display: none;">{{$index}}</td>
-	    <td editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</td>
+	    <td e-style="width: 30px" editable-text="item.quantity" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'quantity','value':item.quantity} )">{{ item.quantity }}</td>
 	    <td editable-text="item.name"  buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'name','value':item.name} )">{{ item.name }}</td>
 	    <td editable-text="item.vendor" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendor','value':item.vendor} )">{{ item.vendor }}</td>
 	    <td editable-text="item.vendorpartno" buttons="no" onaftersave="updateItem( {'item_id':item.item_id,'column':'vendorpartno','value':item.vendorpartno} )">{{ item.vendorpartno }}</td>
