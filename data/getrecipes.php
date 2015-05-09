@@ -1,7 +1,7 @@
 <?php
 require_once('connect.php');
 
-$recipes = $conn->query("select recipe_id, name from recipes");
+$recipes = $conn->query("select recipe_id, name from recipes ORDER BY name");
     
 $rows = array();
 

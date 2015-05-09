@@ -1,29 +1,30 @@
 
-<div class="row">
+<div class="row"  class="hidden-print" >
     <!--- add a button to change recipes -->
     
     <!-- button to add recipe -->
     <a href="" ng-click="addone=true">add recipe</a>
     <input  ng-show="addone" type="text" name="recipe_name" placeholder="recipe name" ng-model="recipe_name" ><button  ng-show="addone" ng-click="addRecipe()" class="btn btn-primary">+</button>
         - or choose from:    
-        <select ng-model="recipe_id" ng-options="recipe.name for recipe in recipes"  ng-change="selectRecipe(recipe_id)"></select>
+        <select ng-model="recipe" ng-options="recipe.name for recipe in recipes"  ng-change="selectRecipe(recipe)"></select>
         
             
         
-        <center><h2>  {{recipe_id.name}} </h2></center>
+        <center><h2>{{recipe.name}}</h2></center>
         
        
 </div>
-<div  ng-show="recipe_id" >
+<div  ng-show="recipe"  class="hidden-print" >
     add <select ng-model="additem_id" ng-options="item.name for item in items" ng-change="addItemToRecipe(additem_id)"></select>
 </div>
 <hr/>
-{{recipeItems.length}} items in recipe
+<span ng-if="recipeItems.length>0" >{{recipeItems.length}} items in recipe. <mark> Total recipe Cost {{ calculateRecipeCost() || 0  | currency }} </mark></span>
+</div>
 <table class="table table-bordered" ng-if="recipeItems.length >= 1" >
     <thead>
       <tr>
-        <th width="20" class="text-center">-</th>
-	<th>index</th>
+        <th width="20" class="hidden-print" ><center>-</center></th>
+	<th style="display: none;"  class="hidden-print" >index</th>
         <th>
           <a href="" ng-click="orderByField='name'; reverseSort = !reverseSort">
           Item Name <span ng-show="orderByField == 'name'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
@@ -45,11 +46,6 @@
           </a>
         </th>
         <th>
-          <a href="" ng-click="orderByField='unit'; reverseSort = !reverseSort">
-          unit <span ng-show="orderByField == 'unit'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
-          </a>
-        </th>
-        <th>
           <a href="" ng-click="orderByField='origin'; reverseSort = !reverseSort">
           origin <span ng-show="orderByField == 'origin'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
           </a>
@@ -59,19 +55,24 @@
           total <span ng-show="orderByField == 'total'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
           </a>
         </th>
+        <th>
+          <a href="" ng-click="orderByField='stockqty'; reverseSort = !reverseSort">
+          stockQty <span ng-show="orderByField == 'stockqty'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="recipeitem in recipeItems|orderBy:orderByField:reverseSort" ng-if="recipeItems.length >= 1">
-	<td ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
-        <td>{{$index}}</td>
-	<td>{{recipeitem.name}}</td>
+	<td  class="hidden-print" ><a href='' ng-click="removeRecipeItem( {'recipe_id':recipeitem.recipe_id,'item_id':recipeitem.item_id } )" ><img src="deleteme.png" width=20 height=20 id="deleteme" ></img></a></td>
+        <td  class="hidden-print" style="display: none;">{{$index}}</td>
+	<td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} ">{{recipeitem.name}}</td>
         <td editable-text="recipeitem.amount" onaftersave="updateRecipeItem( {'recipe_id':recipe_id,'item_id':recipeitem.item_id,'value':recipeitem.amount} )">{{recipeitem.amount}} {{recipeitem.unit}}</td>
         <td>{{recipeitem.type}}</td>
         <td>{{recipeitem.cost}} per {{recipeitem.unit}}</td>
-        <td>{{recipeitem.unit}}</td>
         <td>{{recipeitem.origin}}</td>
-        <td>{{recipeitem.cost * recipeitem.amount | currency }}</td>
+        <td>{{parseInt(recipeitem.cost) * parseInt(recipeitem.amount) | currency }}</td>
+	<td ng-class="{danger: recipeitem.stockqty < recipeitem.amount , success: recipeitem.stockqty >= recipeitem.amount} ">{{recipeitem.stockqty}}</td>
       </tr>
     </tbody>
   </table>
